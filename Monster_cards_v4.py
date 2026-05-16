@@ -80,7 +80,7 @@ def add_monster():
 
 # search/edit monster card function v4
 def search_edit_monster():
-    searched_name = easygui.enterbox("Please enter the name of the monster you want" \
+    searched_name = easygui.enterbox("Please enter the name of the monster you want " \
                                         "to search:", "Search monster").title().strip()
     
     # check to see if searched monster is in catalogue
@@ -95,7 +95,32 @@ def search_edit_monster():
         # ask user if they wish to edit searched monster
         choice = easygui.buttonbox(f"Current Stats:\n{stats_summary}\nWhat would you like to do?", 
                                    "Monster Found", 
-                                   choices=["Edit Stats", "Keep as is"])
+                                   choices=["Edit Stats", "Return to main menu"])
+            
+        if choice == "Edit Stats":
+            # user inputs new values for each stat
+            temp_stats = {}
+            for stat in STAT_CATEGORIES:
+                new_value = easygui.integerbox(f"Enter NEW {stat} value for {searched_name}:"
+                                               f"\n(Must be between {MIN_STAT}-{MAX_STAT})", 
+                                               f"Edit {stat}", 
+                                               lowerbound=MIN_STAT, 
+                                               upperbound=MAX_STAT)
+                
+                # if user selects cancel
+                if new_value is None:
+                    easygui.msgbox("Edit cancelled. No changes were saved.", "Cancelled")
+                    return
+                
+                temp_stats[stat] = new_value
+            
+            # update dictionary
+            monster_catalogue[searched_name] = temp_stats
+            easygui.msgbox(f"All stats for '{searched_name}' have been successfully updated!", "Success")
+    
+    else:
+        # if monster not found in catalogue
+        easygui.msgbox(f"Sorry, '{searched_name}' was not found in the catalogue.", "Not Found")
 
 def delete_monster():
     pass
