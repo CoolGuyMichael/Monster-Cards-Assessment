@@ -1,7 +1,7 @@
 """
 Program to store monster cards for a card game
 By Michael Chiu
-Version 5, Component 4: Search/edit monster card function
+Version 5, Component 4: Delete monster card function
 17-5-26
 """
 
